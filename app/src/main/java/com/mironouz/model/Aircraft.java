@@ -1,4 +1,4 @@
 package com.mironouz.model;
 
-public record Aircraft(Location location) {
+public record Aircraft(Location location, char marker) {
 }
