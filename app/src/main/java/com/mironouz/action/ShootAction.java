@@ -2,19 +2,22 @@ package com.mironouz.action;
 
 import com.mironouz.model.Aircraft;
 import com.mironouz.model.Location;
-import com.mironouz.model.World;
 
-public final class ShootAction extends Action {
-    @Override
-    public Object act(World world, Aircraft aircraft, Location location) {
-        if (aircraft.location().equals(location)) {
-            System.out.println("You cannot shoot yourself");
-            return false;
-        } else if (world.checkLocation(location)) {
-            System.out.println("Game is over");
-            return true;
+import java.util.List;
+import java.util.logging.Logger;
+
+
+public final class ShootAction implements Action {
+    private final Logger logger = Logger.getLogger(ShootAction.class.getName());
+
+    public Aircraft act(List<Aircraft> aircrafts, Location location) {
+        for (var aircraft : aircrafts) {
+            if (aircraft.location().equals(location)) {
+                logger.info(aircraft + " is destroyed");
+                return aircraft;
+            }
         }
-        System.out.println("You have missed");
-        return false;
+        logger.info("You have missed");
+        return null;
     }
 }
